@@ -14,15 +14,15 @@
     <script type="text/babel">
         function App() {
             const [salePrice, setSalePrice] = React.useState(415000);
+            const [loanAmount, setLoanAmount] = React.useState(240000);
 
-            const calculateNet = (price) => {
+            const calculateNet = (price, loan) => {
                 const netAfterFees = price * 0.91; // Using 0.91 multiplier as specified
-                const loan = 240000;
                 const finalAmount = netAfterFees - loan;
                 return finalAmount > 0 ? finalAmount : 0;
             };
 
-            const netAmount = calculateNet(salePrice);
+            const netAmount = calculateNet(salePrice, loanAmount);
 
             const formatCurrency = (value) => {
                 return new Intl.NumberFormat('en-US', {
@@ -32,9 +32,14 @@
                 }).format(value);
             };
 
-            const handleInputChange = (e) => {
+            const handleSalePriceChange = (e) => {
                 const value = e.target.value.replace(/[^0-9.]/g, '');
                 setSalePrice(value ? parseFloat(value) : 0);
+            };
+
+            const handleLoanAmountChange = (e) => {
+                const value = e.target.value.replace(/[^0-9.]/g, '');
+                setLoanAmount(value ? parseFloat(value) : 0);
             };
 
             return (
@@ -53,9 +58,26 @@
                             <input
                                 type="text"
                                 value={salePrice}
-                                onChange={handleInputChange}
+                                onChange={handleSalePriceChange}
                                 className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
                                 placeholder="Enter sale price"
+                            />
+                        </div>
+                    </div>
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Loan Amount
+                        </label>
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+                                $
+                            </span>
+                            <input
+                                type="text"
+                                value={loanAmount}
+                                onChange={handleLoanAmountChange}
+                                className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                                placeholder="Enter loan amount"
                             />
                         </div>
                     </div>
@@ -74,7 +96,7 @@
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-gray-600">Loan Payoff:</span>
-                                <span className="font-medium">{formatCurrency(240000)}</span>
+                                <span className="font-medium">{formatCurrency(loanAmount)}</span>
                             </div>
                             <div className="flex justify-between text-lg font-bold text-blue-600">
                                 <span>Net Amount:</span>
@@ -83,7 +105,7 @@
                         </div>
                     </div>
                     <div className="mt-6 text-center text-sm text-gray-500">
-                        Note: Assumes 91% retained after fees and $240,000 loan payoff.
+                        Note: Assumes 91% retained after fees and variable loan payoff.
                     </div>
                 </div>
             );
