@@ -33,12 +33,12 @@
             };
 
             const handleSalePriceChange = (e) => {
-                const value = e.target.value.replace(/[^0-9.]/g, '');
+                const value = e.target.value;
                 setSalePrice(value ? parseFloat(value) : 0);
             };
 
             const handleLoanAmountChange = (e) => {
-                const value = e.target.value.replace(/[^0-9.]/g, '');
+                const value = e.target.value;
                 setLoanAmount(value ? parseFloat(value) : 0);
             };
 
@@ -48,7 +48,7 @@
                         House Sale Calculator
                     </h1>
                     <div className="mb-6">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="salePrice" className="block text-sm font-medium text-gray-700 mb-2">
                             Sale Price
                         </label>
                         <div className="relative">
@@ -56,7 +56,9 @@
                                 $
                             </span>
                             <input
-                                type="text"
+                                id="salePrice"
+                                type="number"
+                                step="any"
                                 value={salePrice}
                                 onChange={handleSalePriceChange}
                                 className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
@@ -65,7 +67,7 @@
                         </div>
                     </div>
                     <div className="mb-6">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="loanAmount" className="block text-sm font-medium text-gray-700 mb-2">
                             Loan Amount
                         </label>
                         <div className="relative">
@@ -73,7 +75,9 @@
                                 $
                             </span>
                             <input
-                                type="text"
+                                id="loanAmount"
+                                type="number"
+                                step="any"
                                 value={loanAmount}
                                 onChange={handleLoanAmountChange}
                                 className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
